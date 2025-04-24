@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Circle Click Game</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Circle Click Game</h1>
+  <div class="game-info">
+    <div class="score-container">Score: <span id="score">0</span></div>
+    <div class="timer-container">
+      <div id="timer-wrapper">
+        <svg id="timer-svg" viewBox="0 0 100 100">
+          <!-- Outer circle (track) -->
+          <circle cx="50" cy="50" r="45" fill="none" stroke="#333" stroke-width="2" />
+          
+          <!-- Colorful progress track -->
+          <circle id="timer-progress" cx="50" cy="50" r="45" fill="none" stroke="url(#timer-gradient)" stroke-width="5" 
+            stroke-dasharray="283" stroke-dashoffset="0" transform="rotate(-90,50,50)" />
+          
+          <!-- Center -->
+          <circle cx="50" cy="50" r="40" fill="#222" />
+          
+          <!-- Tick marks for seconds -->
+          <g id="tick-marks"></g>
+          
+          <!-- Needle -->
+          <line id="timer-needle" x1="50" y1="50" x2="50" y2="10" stroke="#f5d742" stroke-width="2" />
+          
+          <!-- Center dot -->
+          <circle cx="50" cy="50" r="3" fill="#f5d742" />
+          
+          <!-- Gradient definition -->
+          <defs>
+            <linearGradient id="timer-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#4CAF50" />
+              <stop offset="25%" stop-color="#8BC34A" />
+              <stop offset="50%" stop-color="#FFEB3B" />
+              <stop offset="75%" stop-color="#FF9800" />
+              <stop offset="100%" stop-color="#F44336" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div id="timer-text">30</div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="game-area"></div>
+  
+  <div class="controls">
+    <button id="startGameBtn">Start Game</button>
+    <button id="resetGameBtn">Reset Game</button>
+  </div>
+  
+  <div id="game-message"></div>
+
+  <script src="anime.min.js"></script>
+  <script src="game.js"></script>
+</body>
+</html> 
