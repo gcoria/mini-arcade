@@ -7,7 +7,7 @@ import (
 
 func main() {
 	// Serve static files (HTML, JS, CSS, Anime.js)
-	fs := http.FileServer(http.Dir("./static"))
+	fs := http.FileServer(http.Dir("./arcade_collection"))
 	http.Handle("/", fs)
 
 	// Example API endpoint

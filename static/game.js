@@ -6,7 +6,10 @@ let isGameRunning = false;
 let circleSpawnInterval;
 const gameArea = document.getElementById('game-area');
 const scoreDisplay = document.getElementById('score');
-const timeDisplay = document.getElementById('time');
+const timerDisplay = document.getElementById('timer-text');
+const timerNeedle = document.getElementById('timer-needle');
+const timerProgress = document.getElementById('timer-progress');
+const tickMarksGroup = document.getElementById('tick-marks');
 const gameMessage = document.getElementById('game-message');
 const startBtn = document.getElementById('startGameBtn');
 const resetBtn = document.getElementById('resetGameBtn');
@@ -23,6 +26,39 @@ function initGame() {
   startBtn.addEventListener('click', startGame);
   resetBtn.addEventListener('click', resetGame);
   resetBtn.disabled = true;
+  
+  // Create tick marks
+  createTickMarks();
+}
+
+// Create tick marks around the timer
+function createTickMarks() {
+  // Create 30 tick marks (one for each second)
+  for (let i = 0; i < 30; i++) {
+    const angle = (i * 12) - 90; // 12 degrees per second, starting at top
+    const isMainTick = i % 5 === 0; // Larger tick every 5 seconds
+    
+    // Calculate the tick start and end positions
+    const innerRadius = isMainTick ? 40 : 42;
+    const outerRadius = 45;
+    
+    const startX = 50 + innerRadius * Math.cos(angle * Math.PI / 180);
+    const startY = 50 + innerRadius * Math.sin(angle * Math.PI / 180);
+    const endX = 50 + outerRadius * Math.cos(angle * Math.PI / 180);
+    const endY = 50 + outerRadius * Math.sin(angle * Math.PI / 180);
+    
+    // Create the tick line
+    const tick = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    tick.setAttribute("x1", startX);
+    tick.setAttribute("y1", startY);
+    tick.setAttribute("x2", endX);
+    tick.setAttribute("y2", endY);
+    tick.setAttribute("stroke", "#f5d742");
+    tick.setAttribute("stroke-width", isMainTick ? "1.5" : "0.75");
+    
+    // Add to the group
+    tickMarksGroup.appendChild(tick);
+  }
 }
 
 // Start the game
@@ -34,11 +70,14 @@ function startGame() {
   gameTime = 30;
   
   scoreDisplay.textContent = score;
-  timeDisplay.textContent = gameTime;
+  timerDisplay.textContent = gameTime;
   gameMessage.textContent = '';
   
   startBtn.disabled = true;
   resetBtn.disabled = false;
+  
+  // Reset timer animation
+  resetTimerAnimation();
   
   // Start spawning circles
   circleSpawnInterval = setInterval(spawnCircle, 1000);
@@ -46,12 +85,61 @@ function startGame() {
   // Start game timer
   gameTimer = setInterval(() => {
     gameTime--;
-    timeDisplay.textContent = gameTime;
+    timerDisplay.textContent = gameTime;
+    
+    // Update timer animation
+    updateTimerAnimation(gameTime);
     
     if (gameTime <= 0) {
       endGame();
     }
   }, 1000);
+  
+  // Initial timer animation
+  updateTimerAnimation(gameTime);
+}
+
+// Update the timer animation
+function updateTimerAnimation(seconds) {
+  // Calculate the progress (0 to 283, which is the circumference of the circle)
+  const max = 30; // 30 seconds
+  const progress = 283 * (1 - seconds / max);
+  const angle = 360 * (1 - seconds / max);
+  
+  // Animate the progress track
+  anime({
+    targets: timerProgress,
+    strokeDashoffset: progress,
+    duration: 500,
+    easing: 'easeOutQuad'
+  });
+  
+  // Animate the needle
+  anime({
+    targets: timerNeedle,
+    rotate: angle,
+    duration: 500,
+    easing: 'easeOutElastic(1, 0.5)',
+    transformOrigin: ['50% 50%'],
+  });
+}
+
+// Reset timer animation
+function resetTimerAnimation() {
+  anime({
+    targets: timerProgress,
+    strokeDashoffset: 0,
+    duration: 400,
+    easing: 'easeOutQuad'
+  });
+  
+  anime({
+    targets: timerNeedle,
+    rotate: 0,
+    duration: 400,
+    easing: 'easeOutQuad',
+    transformOrigin: ['50% 50%'],
+  });
 }
 
 // Create balloon pop effect
@@ -224,7 +312,7 @@ function spawnCircle() {
             }
           }
         });
-      }, 500); // Circles last half a second
+      }, 1500); // Circles last half a second
     }
   });
 }
@@ -262,8 +350,9 @@ function resetGame() {
   score = 0;
   gameTime = 30;
   scoreDisplay.textContent = score;
-  timeDisplay.textContent = gameTime;
+  timerDisplay.textContent = gameTime;
   gameMessage.textContent = '';
+  resetTimerAnimation();
 }
 
 // Helper function for random numbers
