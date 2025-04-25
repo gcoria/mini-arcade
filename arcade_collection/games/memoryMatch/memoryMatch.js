@@ -3,10 +3,10 @@
  */
 (function() {
   // Game metadata
-  const GAME_ID = 'memory-match';
+  const GAME_ID = 'memoryMatch';
   const GAME_NAME = 'Memory Match';
   const GAME_DESCRIPTION = 'Test your memory by matching pairs of cards. Find all matches before time runs out!';
-  const GAME_THUMBNAIL = '/games/memoryMatch/thumbnail.jpg';
+  const GAME_THUMBNAIL = '/arcade/games/memoryMatch/thumbnail.jpg';
   
   // Game variables
   let score = 0;

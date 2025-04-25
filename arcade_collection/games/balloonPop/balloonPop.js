@@ -3,10 +3,10 @@
  */
 (function() {
   // Game metadata
-  const GAME_ID = 'balloon-pop';
+  const GAME_ID = 'balloonPop';
   const GAME_NAME = 'Balloon Pop';
   const GAME_DESCRIPTION = 'Click on balloons before they disappear! Test your reflexes in this fast-paced game.';
-  const GAME_THUMBNAIL = '/games/balloonPop/thumbnail.jpg';
+  const GAME_THUMBNAIL = '/arcade/games/balloonPop/thumbnail.jpg';
   
   // Game variables
   let score = 0;
