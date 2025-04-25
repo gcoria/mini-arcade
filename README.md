@@ -2,7 +2,7 @@
 
 A lightweight, browser-based arcade collection featuring classic games reimagined with modern web technologies. Built with Go on the backend and JavaScript on the frontend, this project demonstrates full-stack development skills with a focus on interactive game design.
 
-![Mini Arcade Screenshot](https://via.placeholder.com/800x400?text=Mini+Arcade+Screenshot)
+![Mini Arcade Screenshot](https://github.com/user-attachments/assets/f5f47f54-bb54-412b-9206-edd5a32d0d2e)
 
 ## ✨ Features
 
